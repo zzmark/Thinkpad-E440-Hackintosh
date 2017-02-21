@@ -3,6 +3,8 @@
 提取工具：Ubuntu
 
 提取版本：BIOS 2.27
+
+版本：17-2-18
 ##使用补丁：
 ####DSDT:
 Remove _DSM
@@ -54,4 +56,12 @@ HPET Fix 修正因HPET唤醒睡眠
 
 该补丁修复了接口状态问题，若接口本来就是DP（0x00400000)则不需要这个补丁
 
-*但至今HDMI音频无法使用，原因不明，待进一步更新*
+##屏蔽独显：
+参考教程：[https://www.firewolf.science/2015/05/%E5%B1%8F%E8%94%BD%E5%8F%8C%E6%98%BE%E5%8D%A1%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%9A%84%E7%8B%AC%E6%98%BE/](https://www.firewolf.science/2015/05/%E5%B1%8F%E8%94%BD%E5%8F%8C%E6%98%BE%E5%8D%A1%E7%AC%94%E8%AE%B0%E6%9C%AC%E7%9A%84%E7%8B%AC%E6%98%BE/)
+
+关闭独显Method：GPOF
+\_SB.PCI0.PEG.VID.OMPR = 0x03
+\_SB.PCI0.PEG.VID._PS3()
+几个和独显切换相关的Method：
+NBCI、NVOP（NV OPTIMUS DSM)、NVPS（NV GPS DSM）
+

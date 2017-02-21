@@ -561,7 +561,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
         OBF6,   8, 
         OBF7,   8, 
         OBF8,   8, 
-        XHCI,   8, 
+        XHC,   8, 
         XTUB,   32, 
         XTUS,   32, 
         XMPB,   32, 
@@ -2476,9 +2476,9 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                 CreateDWordField (Arg3, 0x00, CDW1)
                 CreateDWordField (Arg3, 0x04, CDW2)
                 CreateDWordField (Arg3, 0x08, CDW3)
-                If (\_SB.PCI0.XHCI.CUID (Arg0))
+                If (\_SB.PCI0.XHC.CUID (Arg0))
                 {
-                    Return (\_SB.PCI0.XHCI.POSC (Arg1, Arg2, Arg3))
+                    Return (\_SB.PCI0.XHC.POSC (Arg1, Arg2, Arg3))
                 }
 
                 If ((Arg0 == ToUUID ("33db4d5b-1ff7-401c-9657-7441c03dd766") /* PCI Host Bridge Device */))
@@ -7014,6 +7014,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                         {
                             \VHYB (0x04, 0x01)
                         }
+                        \_SB.PCI0.PEG.VID.OMPR = 0x03
+                        \_SB.PCI0.PEG.VID._PS3()
                     }
 
                     OperationRegion (PCNV, PCI_Config, 0x0488, 0x04)
@@ -9109,7 +9111,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                 }
             }
 
-            Device (XHCI)
+            Device (XHC)
             {
                 Name (_ADR, 0x00140000)  // _ADR: Address
                 Name (_S3D, 0x03)  // _S3D: S3 Device State
@@ -9154,7 +9156,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                 {
                     CreateDWordField (Arg2, 0x00, CDW1)
                     CreateDWordField (Arg2, 0x08, CDW3)
-                    If ((\XHCI == 0x00))
+                    If ((\XHC == 0x00))
                     {
                         CDW1 |= 0x02
                         \_SB.PCI0.LPC.XUSB = 0x00
@@ -9190,7 +9192,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                         Return (Arg2)
                     }
 
-                    If ((!(CDW1 & 0x01) && ((\XHCI == 0x02) || (\XHCI == 0x03))))
+                    If ((!(CDW1 & 0x01) && ((\XHC == 0x02) || (\XHC == 0x03))))
                     {
                         SXHC ()
                     }
@@ -9200,7 +9202,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
 
                 Method (ESEL, 0, Serialized)
                 {
-                    If (((\XHCI == 0x02) || (\XHCI == 0x03)))
+                    If (((\XHC == 0x02) || (\XHC == 0x03)))
                     {
                         PR3 &= 0xFFFFFFC0
                         PR2 &= 0xFFFF8000
@@ -10074,8 +10076,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPC0, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x01))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x01))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10088,10 +10090,10 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLD0
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
+                                If ((\XHC == 0x00)) {}
                                 Else
                                 {
-                                    If ((\_SB.PCI0.XHCI.PR2 & 0x01))
+                                    If ((\_SB.PCI0.XHC.PR2 & 0x01))
                                     {
                                         VIS &= 0x00
                                     }
@@ -10114,8 +10116,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPC1, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x02))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x02))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10128,8 +10130,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLD1
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x02))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x02))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10151,8 +10153,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPCN, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x04))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x04))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10165,8 +10167,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLDN
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x04))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x04))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10188,8 +10190,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPC4, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x08))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x08))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10202,8 +10204,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLD4
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x08))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x08))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10225,8 +10227,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPCI, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x10))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x10))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10239,8 +10241,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLDI
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x10))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x10))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10262,8 +10264,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPCN, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x20))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x20))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10276,8 +10278,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLDN
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x20))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x20))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10299,8 +10301,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPCN, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x40))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x40))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10313,8 +10315,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLDN
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x40))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x40))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10336,8 +10338,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPCN, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x80))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x80))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10350,8 +10352,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLDN
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x80))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x80))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10440,8 +10442,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPCN, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x0100))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x0100))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10454,8 +10456,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLDN
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x0100))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x0100))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10477,8 +10479,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPC2, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x0200))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x0200))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10491,8 +10493,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLD2
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x0200))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x0200))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10514,8 +10516,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPCI, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x0400))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x0400))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10528,8 +10530,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLDI
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x0400))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x0400))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10551,8 +10553,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPC5, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x0800))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x0800))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10565,8 +10567,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLD5
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x0800))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x0800))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10588,8 +10590,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPCI, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x1000))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x1000))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -10602,8 +10604,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                 Name (PLDP, Buffer (0x10) {})
                                 PLDP = \PLDI
                                 CreateBitField (PLDP, 0x40, VIS)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x1000))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x1000))
                                 {
                                     VIS &= 0x00
                                 }
@@ -10625,8 +10627,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                                     0x00
                                 })
                                 CopyObject (\UPCI, UPCP)
-                                If ((\XHCI == 0x00)) {}
-                                ElseIf ((\_SB.PCI0.XHCI.PR2 & 0x2000))
+                                If ((\XHC == 0x00)) {}
+                                ElseIf ((\_SB.PCI0.XHC.PR2 & 0x2000))
                                 {
                                     UPCP [0x00] = 0x00
                                 }
@@ -15419,6 +15421,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
     })
     Method (\_PTS, 1, NotSerialized)  // _PTS: Prepare To Sleep
     {
+        \_SB.PCI0.PEG.VID._PS0()
         D80P = Arg0
         Local0 = 0x01
         If ((Arg0 == \SPS))
@@ -15514,6 +15517,8 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
     })
     Method (\_WAK, 1, NotSerialized)  // _WAK: Wake
     {
+        \_SB.PCI0.PEG.VID.OMPR = 0x03
+        \_SB.PCI0.PEG.VID._PS3()
         D80P = (Arg0 << 0x04)
         If (((Arg0 == 0x00) || (Arg0 >= 0x05)))
         {
@@ -15595,24 +15600,24 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                 \CMPR = 0x00
             }
 
-            If ((\USBR || \_SB.PCI0.XHCI.XRST))
+            If ((\USBR || \_SB.PCI0.XHC.XRST))
             {
-                If (((\XHCI == 0x02) || (\XHCI == 0x03)))
+                If (((\XHC == 0x02) || (\XHC == 0x03)))
                 {
                     Local0 = 0x00
-                    Local0 = (\_SB.PCI0.XHCI.PR3 & 0xFFFFFFC0)
-                    \_SB.PCI0.XHCI.PR3 = (Local0 | \_SB.PCI0.XHCI.PR3M)
+                    Local0 = (\_SB.PCI0.XHC.PR3 & 0xFFFFFFC0)
+                    \_SB.PCI0.XHC.PR3 = (Local0 | \_SB.PCI0.XHC.PR3M)
                     Local0 = 0x00
-                    Local0 = (\_SB.PCI0.XHCI.PR2 & 0xFFFF8000)
-                    \_SB.PCI0.XHCI.PR2 = (Local0 | \_SB.PCI0.XHCI.PR2M)
+                    Local0 = (\_SB.PCI0.XHC.PR2 & 0xFFFF8000)
+                    \_SB.PCI0.XHC.PR2 = (Local0 | \_SB.PCI0.XHC.PR2M)
                     If (((\WIN8 == 0x00) && \WIN7))
                     {
-                        \_SB.PCI0.XHCI.PR2 &= 0xFFFFFFEF
+                        \_SB.PCI0.XHC.PR2 &= 0xFFFFFFEF
                     }
 
                     If ((\WIN8 == 0x01))
                     {
-                        \_SB.PCI0.XHCI.PR2 &= 0xFFFFFFEF
+                        \_SB.PCI0.XHC.PR2 &= 0xFFFFFFEF
                     }
                 }
             }
@@ -15694,24 +15699,24 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                 }
             }
 
-            If (\_SB.PCI0.XHCI.XRST)
+            If (\_SB.PCI0.XHC.XRST)
             {
-                If (((\XHCI == 0x02) || (\XHCI == 0x03)))
+                If (((\XHC == 0x02) || (\XHC == 0x03)))
                 {
                     Local0 = 0x00
-                    Local0 = (\_SB.PCI0.XHCI.PR3 & 0xFFFFFFC0)
-                    \_SB.PCI0.XHCI.PR3 = (Local0 | \_SB.PCI0.XHCI.PR3M)
+                    Local0 = (\_SB.PCI0.XHC.PR3 & 0xFFFFFFC0)
+                    \_SB.PCI0.XHC.PR3 = (Local0 | \_SB.PCI0.XHC.PR3M)
                     Local0 = 0x00
-                    Local0 = (\_SB.PCI0.XHCI.PR2 & 0xFFFF8000)
-                    \_SB.PCI0.XHCI.PR2 = (Local0 | \_SB.PCI0.XHCI.PR2M)
+                    Local0 = (\_SB.PCI0.XHC.PR2 & 0xFFFF8000)
+                    \_SB.PCI0.XHC.PR2 = (Local0 | \_SB.PCI0.XHC.PR2M)
                     If (((\WIN8 == 0x00) && \WIN7))
                     {
-                        \_SB.PCI0.XHCI.PR2 &= 0xFFFFFFEF
+                        \_SB.PCI0.XHC.PR2 &= 0xFFFFFFEF
                     }
 
                     If ((\WIN8 == 0x01))
                     {
-                        \_SB.PCI0.XHCI.PR2 &= 0xFFFFFFEF
+                        \_SB.PCI0.XHC.PR2 &= 0xFFFFFFEF
                     }
                 }
             }
