@@ -11,7 +11,7 @@ Remove _DSM
 
 Rename PCI0.VID to PCI0.IGPU
 
-Rename B0D3 to HDAU  (ID=28)（HDMI音频注入点，不知道为什么）
+Rename B0D3 to HDAU  (ID=12)
 
 Haswell HD4600 Yosemite
 
@@ -39,12 +39,11 @@ Remove _PSS placeholder
 
 Rename PCI0.VID to PCI0.IGPU
 
-Rename B0D3 to HDAU  (ID=28)
+Rename B0D3 to HDAU  (ID=12)
 
 手动修改device名称
 
 ###备选补丁：
-7/8 USB补丁
 HPET Fix 修正因HPET唤醒睡眠
 
 ##HDMI：
@@ -65,3 +64,50 @@ HPET Fix 修正因HPET唤醒睡眠
 几个和独显切换相关的Method：
 NBCI、NVOP（NV OPTIMUS DSM)、NVPS（NV GPS DSM）
 
+将关闭两行放在_WAK的return前，使用调用_PS3电源状态
+
+开启放在_PTS最前，即开始睡眠时打开显卡，调用_PS0电源状态
+
+## 待解决
+
+
+#### 唤醒后风扇狂转
+
+修改：
+
+删除GPOF中
+
+	While ((\LCHK (0x00) == 0x00))
+	{
+		Stall (0x64)
+	}
+
+
+链路分析：
+
+_PS3电源状态：=》调用GPOF：=》ISOP=》判断(VDSP && (VIGD && VDSC))三个寄存器状态{
+
+VDSP，默认为1，根级寄存器，没有赋值，功能不明
+
+VIGD，默认值1，根级寄存器，没有赋值，与EC相关，与两个显卡相关，疑似有其他的可以改这个值
+
+VDSC，默认值1，根级寄存器，没有赋值，就用过这一次
+}
+
+=》
+{
+	\_SB.PCI0.PEG.VID.OMPR == 0x03  判断该值
+=》
+修改D80P=0x33 该寄存器在EC中随处可见
+
+#### 关机变重启
+方案1：
+Clover打FixShutdown补丁
+方案2：
+DSDT Shutdown补丁
+方案3：
+DSDT USB名称从BHC1改成EH01
+方案4：
+主板上，不要让从网卡唤醒（似乎靠谱）
+方案5：
+删了网卡驱动
