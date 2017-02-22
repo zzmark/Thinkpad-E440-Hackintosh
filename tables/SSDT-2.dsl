@@ -25,9 +25,9 @@ DefinitionBlock ("", "SSDT", 1, "LENOVO", "TP-SSDT2", 0x00000200)
     External (_SB_.PCI0.LPC_.EC__.BRTW, PkgObj)
     External (_SB_.PCI0.PEG_.VID_.ISOP, MethodObj)    // 0 Arguments
     External (_SB_.PCI0.PEG_.VID_.LCD0, DeviceObj)
-    External (_SB_.PCI0.VID_.AINT, MethodObj)    // 2 Arguments
-    External (_SB_.PCI0.VID_.LCD0, DeviceObj)
-    External (_SB_.PCI0.VID_.PFMB, FieldUnitObj)
+    External (_SB_.PCI0.IGPU.AINT, MethodObj)    // 2 Arguments
+    External (_SB_.PCI0.IGPU.LCD0, DeviceObj)
+    External (_SB_.PCI0.IGPU.PFMB, FieldUnitObj)
     External (BRLV, FieldUnitObj)
     External (NBCF, IntObj)
     External (UCMS, MethodObj)    // 1 Arguments
@@ -44,7 +44,7 @@ DefinitionBlock ("", "SSDT", 1, "LENOVO", "TP-SSDT2", 0x00000200)
         }
     }
 
-    Scope (\_SB.PCI0.VID.LCD0)
+    Scope (\_SB.PCI0.IGPU.LCD0)
     {
         Method (_BCL, 0, NotSerialized)  // _BCL: Brightness Control Levels
         {
@@ -54,9 +54,9 @@ DefinitionBlock ("", "SSDT", 1, "LENOVO", "TP-SSDT2", 0x00000200)
             }
 
             Local0 = \_SB.PCI0.LPC.EC.BFRQ ()
-            If ((\_SB.PCI0.VID.PFMB != Local0))
+            If ((\_SB.PCI0.IGPU.PFMB != Local0))
             {
-                \_SB.PCI0.VID.AINT (0x03, Local0)
+                \_SB.PCI0.IGPU.AINT (0x03, Local0)
             }
 
             If (\WIN8)
@@ -325,7 +325,7 @@ DefinitionBlock ("", "SSDT", 1, "LENOVO", "TP-SSDT2", 0x00000200)
         {
             If (((\WIN7 != 0x00) && \_SB.PCI0.PEG.VID.ISOP ()))
             {
-                \_SB.PCI0.VID.LCD0._BCM (Arg0)
+                \_SB.PCI0.IGPU.LCD0._BCM (Arg0)
             }
             ElseIf (\NBCF)
             {
@@ -343,7 +343,7 @@ DefinitionBlock ("", "SSDT", 1, "LENOVO", "TP-SSDT2", 0x00000200)
         {
             If (((\WIN7 != 0x00) && \_SB.PCI0.PEG.VID.ISOP ()))
             {
-                Return (\_SB.PCI0.VID.LCD0._BQC ())
+                Return (\_SB.PCI0.IGPU.LCD0._BQC ())
             }
             Else
             {
