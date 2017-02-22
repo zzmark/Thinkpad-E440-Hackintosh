@@ -7014,6 +7014,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                         {
                             \VHYB (0x04, 0x01)
                         }
+                        
                         \_SB.PCI0.PEG.VID.OMPR = 0x03
                         \_SB.PCI0.PEG.VID._PS3()
                     }
@@ -7121,10 +7122,7 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
                             {
                                 D80P = 0x33
                                 \VHYB (0x08, 0x00)
-                                While ((\LCHK (0x00) == 0x00))
-                                {
-                                    Stall (0x64)
-                                }
+                                //Delete While
 
                                 \VHYB (0x08, 0x02)
                                 DGRS = 0x00
@@ -15517,8 +15515,6 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
     })
     Method (\_WAK, 1, NotSerialized)  // _WAK: Wake
     {
-        \_SB.PCI0.PEG.VID.OMPR = 0x03
-        \_SB.PCI0.PEG.VID._PS3()
         D80P = (Arg0 << 0x04)
         If (((Arg0 == 0x00) || (Arg0 >= 0x05)))
         {
@@ -15774,6 +15770,10 @@ DefinitionBlock ("", "DSDT", 1, "LENOVO", "TP-J9   ", 0x00002230)
         }
 
         \RRBF = Zero
+        
+        \_SB.PCI0.PEG.VID.OMPR = 0x03
+        \_SB.PCI0.PEG.VID._PS3()
+        
         Return (WAKI)
     }
 
