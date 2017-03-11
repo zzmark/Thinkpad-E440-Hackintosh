@@ -59,20 +59,6 @@
 					QkhDMg==
 					</data>
 				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>change XHCI to XHC8</string>
-					<key>Disabled</key>
-					<true/>
-					<key>Find</key>
-					<data>
-					WEhDSQ==
-					</data>
-					<key>Replace</key>
-					<data>
-					WEhD
-					</data>
-				</dict>
 			</array>
 			<key>ReuseFFFF</key>
 			<false/>
@@ -82,10 +68,6 @@
 			<dict>
 				<key>Signature</key>
 				<string>DMAR</string>
-			</dict>
-			<dict>
-				<key>Signature</key>
-				<string>#MCFG</string>
 			</dict>
 		</array>
 		<key>SSDT</key>
@@ -216,18 +198,6 @@
 	</dict>
 	<key>Graphics</key>
 	<dict>
-		<key>EDID</key>
-		<dict>
-			<key>Custom</key>
-			<data>
-			AP///////wAGEPKcAAAAABoVAQSVGg54Au8Fl1dUkiciUFQAAAAB
-			AQEBAQEBAQEBAQEBAQEBPhxWoFAAFjAwIDYANa0QAAAaAAAA/ABD
-			b2xvciBMQ0QKICAgAAAA/gBCT0UgRFQKICAgICAgAAAA/gBIQjE0
-			MFdYMS0zMDEKAEQ=
-			</data>
-			<key>Inject</key>
-			<true/>
-		</dict>
 		<key>Inject</key>
 		<dict>
 			<key>ATI</key>
@@ -250,6 +220,8 @@
 		<true/>
 		<key>Debug</key>
 		<false/>
+		<key>DellSMBIOSPatch</key>
+		<false/>
 		<key>ForceKextsToLoad</key>
 		<array>
 			<string>\System\Library\Extensions\IONetworkingFamily.kext</string>
@@ -264,22 +236,6 @@
 		<true/>
 		<key>KextsToPatch</key>
 		<array>
-			<dict>
-				<key>Comment</key>
-				<string>Comment: change 15 port limit to 20 in AppleUSBXHCIPCI</string>
-				<key>Disabled</key>
-				<false/>
-				<key>Find</key>
-				<data>
-				g72M/v//EA==
-				</data>
-				<key>Name</key>
-				<string>AppleUSBXHCIPCI</string>
-				<key>Replace</key>
-				<data>
-				g72M/v//FQ==
-				</data>
-			</dict>
 			<dict>
 				<key>Comment</key>
 				<string>Enable TRIM for SSD</string>
@@ -330,18 +286,18 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Enable 128MB DVMT-prealloc, 48MB framebuffer, 48MB cursor bytes, 0x0a260006</string>
+				<string>HDMI-audio, port 0105(12), 0x0a260005 0x0a260006, 0x0d220003, 0x0a2e000a, 0x0a26000a-02</string>
 				<key>Disabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>
-				BgAmCgEDAwMAAAACAAAwAQAAYAA=
+				AQUJAAAEAACHAAAA
 				</data>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 				<key>Replace</key>
 				<data>
-				BgAmCgEDAwMAAAAIAAAAAwAAAAM=
+				AQUSAAAIAACHAAAA
 				</data>
 			</dict>
 			<dict>
@@ -362,34 +318,18 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Enable internal display after sleep for 0x0a2e0008, credit syscl/lighting/Yating Zhou</string>
+				<string>Enable 128MB DVMT-prealloc, 48MB framebuffer, 48MB cursor bytes, 0x0a260006</string>
 				<key>Disabled</key>
 				<true/>
 				<key>Find</key>
 				<data>
-				AQAAAEAAAAAeAAAABQUJAQ==
+				BgAmCgEDAwMAAAACAAAwAQAAYAA=
 				</data>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 				<key>Replace</key>
 				<data>
-				AQAAAEAAAAAPAAAABQUJAQ==
-				</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>HDMI-audio, port 0105(12), 0x0a260005 0x0a260006, 0x0d220003, 0x0a2e000a, 0x0a26000a-02</string>
-				<key>Disabled</key>
-				<false/>
-				<key>Find</key>
-				<data>
-				AQUJAAAEAACHAAAA
-				</data>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
-				<key>Replace</key>
-				<data>
-				AQUSAAAIAACHAAAA
+				BgAmCgEDAwMAAAAIAAAAAwAAAAM=
 				</data>
 			</dict>
 			<dict>
