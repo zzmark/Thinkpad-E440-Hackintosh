@@ -79,5 +79,5 @@ pcbeta forum's users
 
 and more OS X hacker
 
-##License
+## License
 The source code is released under [GPL v3](http://www.gnu.org/copyleft/gpl.html) or (at your option) any later version.
