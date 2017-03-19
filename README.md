@@ -43,12 +43,12 @@ This repositories contains:
 
 **Versions:**
 
-- 2017-03-11：
+- 2017-03-11:
 	* Fix Shutdown starts up again(Need change BIOS setting)
-	* Add SD Card reader driver thnx [Sinetek](http://www.insanelymac.com/forum/topic/321080-sineteks-driver-for-realtek-rtsx-sdhc-card-readers/)（RTS5227 ID: 0x522710ec）
+	* Add SD Card reader driver thnx[Sinetek](http://www.insanelymac.com/forum/topic/321080-sineteks-driver-for-realtek-rtsx-sdhc-card-readers/)(RTS5227 ID: 0x522710ec)
 	* Updata Clover to 4012
 
-- 2017-02-18：Initial version
+- 2017-02-18:Initial version
 	* Realized some moudle include graphic, audio, cable network, keyboard and touchpad
 	* Disable Discrete Graphics on DSDT
 	* HDMI support (But HDMI audio can not use)
