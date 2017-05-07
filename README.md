@@ -37,6 +37,7 @@ This repositories contains:
 - ~~USB not integrated: Shutdown change to restart~~(fix 2017-03-11)
 - ~~Sleep:More than 2 hours will be black screen~~(fix 2017-03-11)
 - HDMI Audio not working
+- USB 3.0
 
 ## Releases
 **[Click to Download Releases](https://github.com/ZzMark/Thinkpad-E440-Hackintosh/releases)**
