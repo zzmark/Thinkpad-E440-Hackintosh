@@ -88,7 +88,6 @@ Method (RECB, 2, Serialized)\n
 }\n
 end;
 
-
 into device label EC0 code_regex HWAK,\s+16, replace_matched begin AK00,8,AK01,8, end;
 into device label EC0 code_regex SBRC,\s+16, replace_matched begin RC00,8,RC01,8, end;
 into device label EC0 code_regex SBFC,\s+16, replace_matched begin FC00,8,FC01,8, end;
@@ -123,6 +122,7 @@ into method label _L1D code_regex \(\\_SB\.PCI0\.LPC\.EC\.HWAK, replaceall_match
 into method label _WAK code_regex \(\\_SB\.PCI0\.LPC\.EC\.HWAK, replaceall_matched begin (B1B2(\\_SB.PCI0.LPC.EC.AK00,\\_SB.PCI0.LPC.EC.AK01), end;
 
 # storing into AK00,AK01 (orig HWAK) 8-bit registers
+
 into method label _WAK code_regex Store\s\(Local0,\s\\_SB\.PCI0\.LPCB\.EC0\.HWAK\) replaceall_matched
 begin
 Store(Local0,\\_SB.PCI0.LPCB.EC0.AK00)\n
