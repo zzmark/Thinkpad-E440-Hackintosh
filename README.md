@@ -1,5 +1,7 @@
 # Thinkpad E440 Hackintosh Files
 
+English | [中文](./README-zh.md)
+
 ## ReadMe
 
 This is related to OS X repositories.
@@ -13,7 +15,7 @@ This repositories contains:
 * battary-patch
 * Clover-config
 * kext-list
-* DSDT-compiled
+* DSDT-source
 
 ## Overview
 
@@ -23,29 +25,31 @@ This repositories contains:
 * Brightness to Shortcut
 * HDMI support (But HDMI audio can not use)
 * Disabled NVIDA Geforce graphic card under DSDT
-* CONEXANT CX20751/2 Audio Use AppleALC
 * Cabel Network Support
-* TouchPad and Keyboard: VoodooPS2Controller
-  * modified keyboard:F1 F2 F3 => Mute Volume- Volume+
-  * Closer keystroke marking
 * SpeedStepping
-* SD Card Reader
 * Sleep
 * USB
 
 **Not Working**
 
 * internal WIFI cark: RTL8723 not solution
-* ~~USB not integrated: Shutdown change to restart~~(fix 2017-03-11)
-* ~~Sleep:More than 2 hours will be black screen~~(fix 2017-03-11)
+* USB not integrated: Shutdown change to restart
 * HDMI Audio not working
-* USB 3.0
+* CONEXANT CX20751/2 Audio (not work to use AppleALC)
+* USB 3.0(just a few problems)
 
 ## Releases
 
 **[Click to Download Releases](https://github.com/ZzMark/Thinkpad-E440-Hackintosh/releases)**
 
 **Versions:**
+
+* 2019-09-20:
+  - update to 10.14.5(Mojave)
+  - update Clover to r5070;
+  - update all kext and update all driver
+  - Upgrade to the new graphics driver methods
+  - remove to SD Card Reader(driver norenew)
 
 * 2017-03-11:
   * Fix Shutdown starts up again(Need change BIOS setting)
