@@ -2,6 +2,12 @@
 
 English | [中文](./README-zh.md)
 
+# Deprecated
+
+by something, i ve lost this laptop.
+
+so, this repository was archived. any question please goto google.
+
 ## ReadMe
 
 This is related to OS X repositories.

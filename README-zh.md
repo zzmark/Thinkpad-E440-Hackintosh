@@ -1,5 +1,15 @@
 # Thinkpad E440 Hackintosh Files
 
+# Deprecated
+
+因为一些问题，我不再使用这个笔记本
+
+所以，有问题请直接 google 或者 pcbeta
+
+转投台式机了。
+
+江湖再见
+
 ## ReadMe
 
 本仓库用于 Lenovo Thinkpad E440 20C5A08ECD 型号笔记本电脑
